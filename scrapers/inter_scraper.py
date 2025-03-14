@@ -1,7 +1,7 @@
 # inter_scraper.py
 from .base import BaseScraper
 from config.selectors import INTER_SELECTORS
-from utils import formatters
+from . import formatters
 
 class InterScraper(BaseScraper):
     async def search_jobs(self):
@@ -16,9 +16,9 @@ class InterScraper(BaseScraper):
         await self.page.wait_for_selector(INTER_SELECTORS["vacancy_title"])
         elements = self.page.locator(INTER_SELECTORS["vacancy_title"])
 
-        vacancy_list = await formatters.extrair_textos(elements)
+        vacancy_list = await formatters.extract_text_list(elements)
 
-        print("Inter:", "\n", vacancy_list)
+        jobs = formatters.format_vacancies(vacancy_list, company="Inter")
 
-        return vacancy_list
+        return jobs
 

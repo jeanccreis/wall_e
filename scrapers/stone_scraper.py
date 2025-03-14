@@ -1,6 +1,6 @@
 from .base import BaseScraper
 from config.selectors import STONE_SELECTORS
-from utils import formatters
+from . import formatters
 
 class StoneScraper(BaseScraper):
     async def search_jobs(self):
@@ -15,8 +15,8 @@ class StoneScraper(BaseScraper):
         await self.page.wait_for_selector(STONE_SELECTORS["vacancy_title"])
 
         elements = self.page.locator(STONE_SELECTORS["vacancy_title"])
-        vacancy_list = await formatters.extrair_textos(elements)
-
-        print("Stone:", "\n", vacancy_list)
-
-        return vacancy_list
+        vacancy_list = await formatters.extract_text_list(elements)
+        
+        jobs = formatters.format_vacancies(vacancy_list, company="Stone")
+   
+        return jobs
