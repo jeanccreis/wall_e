@@ -14,9 +14,8 @@ async def extract_text_list(elements):
     return texts
 
 
-def format_vacancies(vacancy_list: list, company: str):
-    # Lógica para transformar lista de vagas em dicionários
-    return [{"company_name": company, "job_title": job} for job in vacancy_list]
+def format_vacancies(vacancy_list: list, company: str, description: str, vacancy_url: str):
+    return [{"company_name": company, "title_job": job, "description_job": description, "url_job": vacancy_url} for job in vacancy_list]
 
 
 def format_data(data: list[dict]) -> pd.DataFrame:
@@ -39,3 +38,15 @@ def format_data(data: list[dict]) -> pd.DataFrame:
         raise ValueError("O DataFrame está vazio")
 
     return df
+
+def insert_jobs_list(jobs_list, origem, titulo, descricao, url):
+
+    vaga = {
+        "company_name": origem,
+        "title_job": titulo,
+        "description_job": descricao,
+        "url_job": url
+    }
+    jobs_list.append(vaga)
+    return jobs_list
+    
